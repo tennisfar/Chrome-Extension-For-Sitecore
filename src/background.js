@@ -1,17 +1,12 @@
-const fooBars = [
-  {
-    foo: 'bar1',
-    bar: 'baz1',
-  },
-  {
-    foo: 'bar2',
-    bar: 'baz2',
-  },
-];
+let favorites = [];
 
-let selectedFooBar = fooBars[0];
+// let sitecoreObj = {};
 
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set({ fooBars });
-  chrome.storage.sync.set({ selectedFooBar });
+chrome.runtime.onInstalled.addListener((reason) => {
+
+  if (reason === chrome.runtime.OnInstalledReason.INSTALL) {
+    chrome.storage.sync.set({ favorites });
+    // chrome.storage.sync.set({ sitecoreObj });
+  }
+
 });
