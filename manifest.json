@@ -1,6 +1,7 @@
 {
   "name": "Chrome extension for Sitecore",
   "description": "A Chrome extension to make your Sitecore experience a lot better!",
+  "homepage_url": "https://github.com/mikelothar/Chrome-Extension-For-Sitecore",
   "version": "1.0.0",
   "manifest_version": 3,
   "content_scripts": [
