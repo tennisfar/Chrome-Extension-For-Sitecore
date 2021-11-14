@@ -191,7 +191,7 @@
       }
 
       if (showFavoritesPopup) {
-        
+
         if (!popup) {
           popup = document.createElement('div');
           popup.id = 'ChromeExtensionForSitecoreFavoritesPopup';
@@ -239,62 +239,6 @@
           addButton.id = 'ChromeExtensionForSitecoreFavoritesPopupAddFavorite';
           addButton.innerText = `Add ${getActiveTreeNodeText()} ? `;
           addButton.addEventListener('click', ev => {
-
-            // chrome.storage.sync.get("sitecoreObj", ({ sitecoreObj }) => {
-            //
-            //   let output = [getActiveTreeNodePath(), getActiveTreeNodeText()];
-            //
-            //   let folders = getActiveTreeNodePath();
-            //   folders = folders.split('/');
-            //   if (folders[0] === '') folders.shift();
-            //
-            //   const forEachFn = (key, i, arr) => {
-            //     const lastIndex = arr.length - 1;
-            //
-            //     if (i === 0) {
-            //       if (!sitecoreObj[key]) {
-            //         sitecoreObj[key] = (i === lastIndex ? output : {});
-            //       }
-            //     }
-            //
-            //     if (i === 1) {
-            //       if (!sitecoreObj[arr[0]][key]) {
-            //         sitecoreObj[arr[0]][key] = (i === lastIndex ? output : {});
-            //       }
-            //     }
-            //
-            //     if (i === 2) {
-            //       if (!sitecoreObj[arr[0]][arr[1]][key]) {
-            //         sitecoreObj[arr[0]][arr[1]][key] = (i === lastIndex ? output : {});
-            //       }
-            //     }
-            //
-            //     if (i === 3) {
-            //       if (!sitecoreObj[arr[0]][arr[1]][arr[2]][key]) {
-            //         sitecoreObj[arr[0]][arr[1]][arr[2]][key] = (i === lastIndex ? output : {});
-            //       }
-            //     }
-            //
-            //     if (i === 4) {
-            //       if (!sitecoreObj[arr[0]][arr[1]][arr[2]][arr[3]][key]) {
-            //         sitecoreObj[arr[0]][arr[1]][arr[2]][arr[3]][key] = (i === lastIndex ? output : {});
-            //       }
-            //     }
-            //
-            //     if (i === 5) {
-            //       if (!sitecoreObj[arr[0]][arr[1]][arr[2]][arr[3]][arr[4]][key]) {
-            //         sitecoreObj[arr[0]][arr[1]][arr[2]][arr[3]][arr[4]][key] = (i === lastIndex ? output : {});
-            //       }
-            //     }
-            //   };
-            //
-            //   folders.forEach(forEachFn);
-            //
-            //   console.error(sitecoreObj);
-            //
-            //   chrome.storage.sync.set({ sitecoreObj });
-            // });
-
             favorites.push({
               label: getActiveTreeNodeText(),
               path: getActiveTreeNodePath(),
