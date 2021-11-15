@@ -168,7 +168,7 @@
     }
 
     chrome.storage.sync.get("favorites", ({ favorites }) => {
-
+      favorites = favorites || [];
       favorites = favorites.sort((a, b) => (a.path > b.path) ? 1 : -1);
 
       const accInfo = document.querySelector('.sc-accountInformation');
