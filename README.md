@@ -1,5 +1,20 @@
 # Chrome extension for Sitecore
 
+## Features
+
+### Bookmark
+The current node is added as a direct link. Click it to get a direct link to the current node, or drag it to the bookmarks bar for later reference.
+
+![Bookmark](./assets/bookmark.jpg)
+
+### Favorites
+The current node can be added to a favorites list.
+
+![Favorites](./assets/favorites.jpg)
+
+### Other features
+Certain layout improvements have been added.
+
 ## Adding extension to Chrome
 
 1. Download and unzip the latest version of this extension, or git clone this repository.
