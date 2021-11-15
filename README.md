@@ -17,7 +17,7 @@ Certain layout improvements have been added.
 
 ## Adding extension to Chrome
 
-1. Download and unzip the latest version of this extension, or git clone this repository.
+1. [Download](https://github.com/mikelothar/Chrome-Extension-For-Sitecore/releases) and unzip the latest version of this extension, or git clone this repository.
 2. Open Chrome browser.
 3. Navigate to `chrome://extensions`
 4. Turn on the Developer mode switcher.
