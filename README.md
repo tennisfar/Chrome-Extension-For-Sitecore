@@ -1,5 +1,7 @@
 # Chrome extension for Sitecore
 
+![GitHub last commit](https://img.shields.io/github/last-commit/mikelothar/Chrome-Extension-For-Sitecore)
+
 ## Features
 
 ### Bookmark
