@@ -163,6 +163,7 @@
         font-size: 12px;
         cursor: pointer;
         background: red;
+        white-space: nowrap;
       }
       `;
     }
