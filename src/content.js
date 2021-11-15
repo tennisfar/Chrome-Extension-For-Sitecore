@@ -263,8 +263,8 @@
   const getFavoriteItemParentText = (favorite) => {
     let path = favorite.path.split('/');
     path.pop();
-    let x = path.pop();
-    path = x + '/ ';
+    path = path.join('/');
+    path = `${path}/ `;
     let span = document.createElement('span');
     span.className = 'ChromeExtensionForSitecoreFavoritesPopupItemParent';
     span.innerText = path;
