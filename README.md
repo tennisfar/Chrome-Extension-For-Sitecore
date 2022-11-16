@@ -14,6 +14,11 @@ The current node can be added to a favorites list.
 
 ![Favorites](./assets/favorites.jpg)
 
+### Find dictionaries
+Highlight a text and get a direct link to its placement in dictionaries.
+![Find dictionaries](./assets/find-dictionaries-1.jpg)
+![Find dictionaries](./assets/find-dictionaries.jpg)
+
 ### Other features
 Certain layout improvements have been added.
 
