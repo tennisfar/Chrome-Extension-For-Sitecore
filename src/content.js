@@ -1,6 +1,284 @@
 (async () => {
 
+  const findTextInDictionaries = () => {
+    const txt = window.getSelection().toString();
+
+    if (txt?.length > 4) {
+      let results = {};
+
+      const output = ({ key, key2, key3, key4, key5, key6, key7, key8, res, dictionaryKey }) => {
+        // key = key ? key + '/' : '';
+        key2 = key2 ? key2 + '/' : '';
+        key3 = key3 ? key3 + '/' : '';
+        key4 = key4 ? key4 + '/' : '';
+        key5 = key5 ? key5 + '/' : '';
+        key6 = key6 ? key6 + '/' : '';
+        key7 = key7 ? key7 + '/' : '';
+        key8 = key8 ? key8 + '/' : '';
+
+        const isDlo = dictionaryKey.includes('-DLO-');
+
+        const region = dictionaryKey.split('path=/')[1].split('&')[0] + '/';
+        results[region + key2 + key3 + key4 + key5 + key6 + key7 + key8] = {
+          isDlo,
+          res
+        };
+      };
+
+      let indexKey = 0;
+      const dictionaryKeys = [];
+
+      while (localStorage.key(indexKey)) {
+        const storageKey = localStorage.key(indexKey);
+
+        if (storageKey.includes('/dlo/scapi/common/dictionary/dictionary')) {
+          dictionaryKeys.push(storageKey);
+        }
+
+        indexKey++;
+      }
+
+      dictionaryKeys.forEach((dictionaryKey) => {
+
+        const s = JSON.parse(localStorage.getItem(dictionaryKey));
+
+        if (typeof s !== 'object')
+          return;
+
+        Object.keys(s).forEach(key => {
+
+          if (typeof s[key] === 'string')
+            if (s[key].includes(txt))
+              output({
+                key,
+                res: s[key],
+                dictionaryKey
+              });
+
+          Object.keys(s[key]).forEach(key2 => {
+            if (typeof s[key][key2] === 'string')
+              if (s[key][key2].includes(txt))
+                output({
+                  key,
+                  key2,
+                  res: s[key][key2],
+                  dictionaryKey
+                });
+
+            Object.keys(s[key][key2]).forEach(key3 => {
+              if (typeof s[key][key2][key3] === 'string')
+                if (s[key][key2][key3].includes(txt))
+                  output({
+                    key,
+                    key2,
+                    key3,
+                    res: s[key][key2][key3],
+                    dictionaryKey
+                  });
+
+              Object.keys(s[key][key2][key3]).forEach(key4 => {
+                if (typeof s[key][key2][key3][key4] === 'string')
+                  if (s[key][key2][key3][key4].includes(txt))
+                    output({
+                      key,
+                      key2,
+                      key3,
+                      key4,
+                      res: s[key][key2][key3][key4],
+                      dictionaryKey
+                    });
+
+                Object.keys(s[key][key2][key3][key4]).forEach(key5 => {
+                  if (typeof s[key][key2][key3][key4][key5] === 'string')
+                    if (s[key][key2][key3][key4][key5].includes(txt))
+                      output({
+                        key,
+                        key2,
+                        key3,
+                        key4,
+                        key5,
+                        res: s[key][key2][key3][key4][key5],
+                        dictionaryKey
+                      });
+
+                  Object.keys(s[key][key2][key3][key4][key5]).forEach(key6 => {
+                    if (typeof s[key][key2][key3][key4][key5][key6] === 'string')
+                      if (s[key][key2][key3][key4][key5][key6].includes(txt))
+                        output({
+                          key,
+                          key2,
+                          key3,
+                          key4,
+                          key5,
+                          key6,
+                          res: s[key][key2][key3][key4][key5][key6],
+                          dictionaryKey
+                        });
+
+                    Object.keys(s[key][key2][key3][key4][key5][key6]).forEach(key7 => {
+                      if (typeof s[key][key2][key3][key4][key5][key6][key7] === 'string')
+                        if (s[key][key2][key3][key4][key5][key6][key7].includes(txt))
+                          output({
+                            key,
+                            key2,
+                            key3,
+                            key4,
+                            key5,
+                            key6,
+                            key7,
+                            res: s[key][key2][key3][key4][key5][key6][key7],
+                            dictionaryKey
+                          });
+
+                      Object.keys(s[key][key2][key3][key4][key5][key6][key7]).forEach(key8 => {
+                        if (typeof s[key][key2][key3][key4][key5][key6][key7][key8] === 'string')
+                          if (s[key][key2][key3][key4][key5][key6][key7][key8].includes(txt))
+                            output({
+                              key,
+                              key2,
+                              key3,
+                              key4,
+                              key5,
+                              key6,
+                              key7,
+                              key8,
+                              res: s[key][key2][key3][key4][key5][key6][key7][key8],
+                              dictionaryKey
+                            });
+
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+
+      const content = [];
+      if (Object.keys(results).length > 150) return;
+      Object.keys(results).forEach(key => {
+        const url = getDictionaryUrl(results[key].isDlo) + key;
+        content.push({ txt: results[key].res, url, key });
+      });
+
+      fillDictionary(content);
+    } else {
+      clearFillDictionary();
+    }
+  };
+
+  const getDictionaryUrl = (isDlo) => {
+    let dictionaryUrl = location.protocol + '//';
+    const isTownEnv = location.host.split('.')[0].includes('town');
+    if (isTownEnv) dictionaryUrl += location.host.split('.')[0];
+    const isDevEnv = location.host.split('.')[0].includes('web');
+    if (isDevEnv) dictionaryUrl += `web.${location.host.split('.')[1]}`;
+    if (!isDevEnv) dictionaryUrl += `edit${isDlo ? 'dlo' : 'dli'}`;
+    dictionaryUrl += '.danskespil.dk/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1&fo=/sitecore/content/DanskeSpil/Site%20settings/Dictionary/';
+    return dictionaryUrl;
+  };
+
+  const clearFillDictionary = () => {
+    let el = document.getElementById('findTextInDictionaries');
+    if (el) el.remove();
+    let style = document.getElementById('findTextInDictionariesStyle');
+    if (style) style.remove();
+  };
+
+  const fillDictionary = (content) => {
+    let el = document.getElementById('findTextInDictionaries');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'findTextInDictionaries';
+      document.body.appendChild(el);
+    } else {
+      el.innerText = '';
+    }
+
+    let style = document.getElementById('findTextInDictionariesStyle');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'findTextInDictionariesStyle';
+      document.body.appendChild(style);
+    }
+
+    style.innerText = `
+        #findTextInDictionaries {
+          position: fixed;
+          z-index: 1000000001;
+          left: 0;
+          top: 100vh;
+          font-size: 12px;
+          line-height: 1.2;
+          background: #ededed;
+          padding: 15px 20px;
+          box-shadow: 0 1px 13px 1px #ccc;
+          max-height: 95vh;
+          max-width: 95vw;
+        }
+        
+        #findTextInDictionaries::after {
+          position: absolute;
+          z-index: 1000000000;
+          content: "${content.length}";
+          top: -35px;
+          left: 10px;
+          width: 40px;
+          height: 40px;
+          background: #bdffe5;
+          color: black;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50% 50% 0 0;
+        }
+        
+        #findTextInDictionaries:hover {
+          top: auto;
+          bottom: 0;
+          overflow: auto;
+        }
+        
+        #findTextInDictionaries a {
+          text-decoration: none;
+        }
+        
+        #findTextInDictionaries a:hover {
+          text-decoration: underline;
+        }
+        
+        #findTextInDictionaries p {
+          background: white;
+          padding: 10px;
+          margin-bottom: 5px;
+        }
+        
+        #findTextInDictionaries a {
+          margin: 0 0 5px 10px;
+          display: inline-block;
+        }
+        `;
+
+    content.forEach((dictionary) => {
+      const div = document.createElement('div');
+      const p = document.createElement('p');
+      const a = document.createElement('a');
+      p.innerText = dictionary.txt;
+      a.href = dictionary.url;
+      a.target = '_blank';
+      a.text = dictionary.key;
+      div.appendChild(p);
+      div.appendChild(a);
+      el.appendChild(div);
+    });
+  };
+
   window.onload = () => {
+    if (location.host.endsWith('danskespil.dk') && location.pathname.split('/')[1] !== 'sitecore') {
+      document.addEventListener('selectionchange', findTextInDictionaries);
+    }
 
     if (location.pathname === '/sitecore/shell/Applications/Content%20Editor.aspx') {
 
@@ -107,6 +385,10 @@
       favoritesStyle.id = "ChromeExtensionForSitecoreFavoritesStyle";
       document.querySelector('body').appendChild(favoritesStyle);
       favoritesStyle.innerHTML = `
+      .sc-globalHeader {
+        z-index: 101;
+      }
+      
       #ChromeExtensionForSitecoreFavorites {
         position: relative;
         cursor: pointer;
@@ -163,6 +445,7 @@
         font-size: 12px;
         cursor: pointer;
         background: red;
+        white-space: nowrap;
       }
       `;
     }
@@ -262,8 +545,8 @@
   const getFavoriteItemParentText = (favorite) => {
     let path = favorite.path.split('/');
     path.pop();
-    let x = path.pop();
-    path = x + '/ ';
+    path = path.join('/');
+    path = `${path}/ `;
     let span = document.createElement('span');
     span.className = 'ChromeExtensionForSitecoreFavoritesPopupItemParent';
     span.innerText = path;
