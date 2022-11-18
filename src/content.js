@@ -1,5 +1,7 @@
 (async () => {
 
+  const isTivoliCasino = () => location.host.includes('tivolicasino.dk');
+
   const findTextInDictionaries = () => {
     const txt = window.getSelection().toString();
 
@@ -7,7 +9,7 @@
       let results = {};
 
       const output = ({ key, key2, key3, key4, key5, key6, key7, key8, res, dictionaryKey }) => {
-        // key = key ? key + '/' : '';
+        key = key ? key + '/' : '';
         key2 = key2 ? key2 + '/' : '';
         key3 = key3 ? key3 + '/' : '';
         key4 = key4 ? key4 + '/' : '';
@@ -18,11 +20,21 @@
 
         const isDlo = dictionaryKey.includes('-DLO-');
 
-        const region = dictionaryKey.split('path=/')[1].split('&')[0] + '/';
-        results[region + key2 + key3 + key4 + key5 + key6 + key7 + key8] = {
-          isDlo,
-          res
-        };
+        if (isTivoliCasino()) {
+          results[dictionaryKey] = {
+            isDlo,
+            res: res + ' (' + key + key2 + key3 + key4 + key5 + key6 + key7 + key8 + ')'
+          };
+        }
+
+        if (!isTivoliCasino()) {
+          const region = dictionaryKey.split('path=/')[1].split('&')[0] + '/';
+
+          results[region + key2 + key3 + key4 + key5 + key6 + key7 + key8] = {
+            isDlo,
+            res
+          };
+        }
       };
 
       let indexKey = 0;
@@ -31,8 +43,16 @@
       while (localStorage.key(indexKey)) {
         const storageKey = localStorage.key(indexKey);
 
-        if (storageKey.includes('/dlo/scapi/common/dictionary/dictionary')) {
-          dictionaryKeys.push(storageKey);
+        if (!isTivoliCasino()) {
+          if (storageKey.includes('/dlo/scapi/common/dictionary/dictionary')) {
+            dictionaryKeys.push(storageKey);
+          }
+        }
+
+        if (isTivoliCasino()) {
+          if (storageKey.startsWith('{') && storageKey.endsWith('}')) {
+            dictionaryKeys.push(storageKey);
+          }
         }
 
         indexKey++;
@@ -46,6 +66,7 @@
           return;
 
         Object.keys(s).forEach(key => {
+          if (!s[key]) return;
 
           if (typeof s[key] === 'string')
             if (s[key].includes(txt))
@@ -173,11 +194,19 @@
     let dictionaryUrl = location.protocol + '//';
     const isTownEnv = location.host.split('.')[0].includes('town');
     if (isTownEnv) dictionaryUrl += location.host.split('.')[0];
-    const isDevEnv = location.host.split('.')[0].includes('web');
-    if (isDevEnv) dictionaryUrl += `web.${location.host.split('.')[1]}`;
-    if (!isDevEnv) dictionaryUrl += `edit${isDlo ? 'dlo' : 'dli'}`;
-    dictionaryUrl += '.danskespil.dk/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1&fo=/sitecore/content/DanskeSpil/Site%20settings/Dictionary/';
-    return dictionaryUrl;
+
+    if (isTivoliCasino()) {
+      dictionaryUrl += 'edit.tivolicasino.dk/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1&fo=';
+      return dictionaryUrl;
+    }
+
+    if (!isTivoliCasino()) {
+      const isDevEnv = location.host.split('.')[0].includes('web');
+      if (isDevEnv) dictionaryUrl += `web.${location.host.split('.')[1]}`;
+      if (!isDevEnv) dictionaryUrl += `edit${isDlo ? 'dlo' : 'dli'}`;
+      dictionaryUrl += '.danskespil.dk/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1&fo=/sitecore/content/DanskeSpil/Site%20settings/Dictionary/';
+      return dictionaryUrl;
+    }
   };
 
   const clearFillDictionary = () => {
@@ -276,7 +305,7 @@
   };
 
   window.onload = () => {
-    if (location.host.endsWith('danskespil.dk') && location.pathname.split('/')[1] !== 'sitecore') {
+    if ((location.host.endsWith('danskespil.dk') || location.host.endsWith('tivolicasino.dk')) && location.pathname.split('/')[1] !== 'sitecore') {
       document.addEventListener('selectionchange', findTextInDictionaries);
     }
 
