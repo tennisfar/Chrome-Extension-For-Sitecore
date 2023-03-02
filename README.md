@@ -2,6 +2,9 @@
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/mikelothar/Chrome-Extension-For-Sitecore)
 
+## To do
+Add history tab next to "Favorites", that adds each item visited.
+
 ## Features
 
 ### Bookmark
