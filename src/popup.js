@@ -2,6 +2,16 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('dsSitecore').addEventListener('click', dsSitecore);
 });
 
+// const template = () => {
+//   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+//     chrome.scripting.executeScript({
+//       target: { tabId: tabs[0].id },
+//       function: () => {
+//       }
+//     });
+//   });
+// };
+
 const dsSitecore = () => {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     chrome.scripting.executeScript({
@@ -239,3 +249,29 @@ const dsSitecore = () => {
   });
 };
 
+// const openInSitecore = () => {
+//   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+//     chrome.scripting.executeScript({
+//         target: { tabId: tabs[0].id },
+//         function: () => {
+//           console.error(window, window.location.origin);
+//           let sitecoreId = window.dataLayer[0].page.id;
+//           let lo = window.location.origin;
+//           let cl = document.body.classList;
+//           let isDlo = cl.contains("dlo");
+//           let isDli = cl.contains("dli");
+//           let reg = isDli ? "dli" : "dlo";
+//
+//           if (lo.includes("town")) lo = lo.replace(".dan", "edit" + reg + ".dan");
+//           if (lo.includes("//da")) lo = lo.replace("//dan", "//edit" + reg + ".dan");
+//
+//           lo += "/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1";
+//           window.open(`${lo}&fo=${sitecoreId}`, "_blank");
+//         },
+//       },
+//       ((res) => {
+//         console.error('res', res);
+//       })
+//     );
+//   });
+// };
