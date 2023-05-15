@@ -1,10 +1,12 @@
 # Chrome extension for Sitecore
 
 ![GitHub last commit](https://img.shields.io/github/manifest-json/v/tennisfar/Chrome-Extension-For-Sitecore)
+
 ![GitHub version](https://img.shields.io/github/last-commit/tennisfar/Chrome-Extension-For-Sitecore)
 
-## To do
-Add history tab next to "Favorites", that adds each item visited.
+<span class="badge-buymeacoffee">
+<a href="https://buymeacoffee.com/tennisfar" title="Donate to this project using Buy Me A Coffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg" alt="Buy Me A Coffee donate button" /></a>
+</span>
 
 ## Features
 
