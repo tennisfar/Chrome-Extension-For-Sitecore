@@ -1,10 +1,8 @@
 # Chrome extension for Sitecore
 
-<a href="https://buymeacoffee.com/tennisfar" title="Donate to this project using Buy Me A Coffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg" alt="Buy Me A Coffee donate button" /></a>
-
 ![GitHub release](https://img.shields.io/github/v/release/tennisfar/Chrome-Extension-For-Sitecore?display_name=tag)
-
 ![GitHub last commit](https://img.shields.io/github/last-commit/tennisfar/Chrome-Extension-For-Sitecore)
+<a href="https://buymeacoffee.com/tennisfar" title="Donate to this project using Buy Me A Coffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg" alt="Buy Me A Coffee donate button" /></a>
 
 
 ## Features
