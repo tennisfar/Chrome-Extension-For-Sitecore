@@ -2,6 +2,30 @@
 
   const isTivoliCasino = () => location.host.includes('tivolicasino.dk');
 
+  const addImageDirectUrl = () => {
+    let item = document.getElementById('EditorFrames')?.querySelector('div');
+    let isVisible = item?.style.display !== 'none';
+    const table = item?.querySelector('table.scEditorQuickInfo tbody');
+
+    if (item?.id && isVisible && table && !table.querySelector('#scToolMediaPath')) {
+      const tr = document.createElement('tr');
+      tr.id = 'scToolMediaPath';
+      const td1 = document.createElement('td');
+      const td2 = document.createElement('td');
+      const style = document.createElement('style');
+      const input = document.createElement('input');
+      input.setAttribute('readonly', 'readonly');
+      input.setAttribute('onclick', 'javascript:this.select();return false');
+      input.value = '-/media/' + item.id.replace('FContent', '') + '.ashx';
+
+      td1.innerText = 'Relativ sti:';
+      td2.appendChild(input);
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      table.appendChild(tr);
+    }
+  };
+
   const findTextInDictionaries = () => {
     const txt = window.getSelection().toString();
 
@@ -310,7 +334,6 @@
     }
 
     if (location.pathname === '/sitecore/shell/Applications/Content%20Editor.aspx') {
-
       stretchColumn();
       scrollToItem();
       addBookmark();
@@ -322,6 +345,10 @@
       });
 
       addFavorites();
+    }
+
+    if (location.pathname === '/sitecore/shell/Applications/Content%20Manager/Default.aspx') {
+      setInterval(addImageDirectUrl, 500);
     }
   };
 

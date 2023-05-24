@@ -4,29 +4,42 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/tennisfar/Chrome-Extension-For-Sitecore)
 <a href="https://buymeacoffee.com/tennisfar" title="Donate to this project using Buy Me A Coffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg" alt="Buy Me A Coffee donate button" /></a>
 
-
 ## Features
 
 ### Bookmark
+
 The current node is added as a direct link. Click it to get a direct link to the current node, or drag it to the bookmarks bar for later reference.
 
 ![Bookmark](./assets/bookmark.jpg)
 
 ### Favorites
+
 The current node can be added to a favorites list.
 
 ![Favorites](./assets/favorites.jpg)
 
 ### Find dictionaries
+
 Highlight a text and get a direct link to its placement in dictionaries.
+
 ![Find dictionaries](./assets/find-dictionaries-1.jpg)
+
 ![Find dictionaries](./assets/find-dictionaries.jpg)
 
 ### Find components in Sitecore
-In the menu, you can find a button that will display the components on the page. Clicking on the component will take you directly to the component settings in Sitecore. 
+
+In the menu, you can find a button that will display the components on the page. Clicking on the component will take you directly to the component settings in Sitecore.
+
 ![DsSitecore](./assets/dsSitecore.jpg)
 
+### Get relative path for images
+
+In the Media Library, when selecting an image, the relative path to the image will be displayed in the Quick Info section.
+
+![Relative path](./assets/relative-path.jpg)
+
 ### Other features
+
 Certain layout improvements have been added.
 
 ## Adding extension to Chrome
