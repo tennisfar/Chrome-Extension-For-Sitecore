@@ -60,6 +60,34 @@ const dsSitecore = () => {
           line-height: 15px;
         }
         
+        .dsSC__item-close {
+          position: relative;
+          width: 30px;
+          height: 30px;
+          background: #222;
+          margin: 0 -8px 0 10px;
+        }
+        
+        .dsSC__item-close::before,
+        .dsSC__item-close::after {
+          position: absolute;
+          top: 14px;
+          left: 10px;
+          content: "";
+          width: 10px;
+          height: 2px;
+          background: white;
+          transform: rotate(45deg);
+        }
+        
+        .dsSC__item-close::after {
+          transform: rotate(-45deg);
+        }
+        
+        .dsSC__item-close:hover {
+          background: red;
+        }
+        
         .dsSC__item img {
           height: 15px;
           width: 15px;
@@ -160,6 +188,7 @@ const dsSitecore = () => {
         const outputComments = (node) => {
           // initialise the child node
           let child = node.firstChild;
+          const prevPositions = [];
 
           // loop while the child node exists
           while (child) {
@@ -179,7 +208,6 @@ const dsSitecore = () => {
                   child.getBoundingClientRect().left + 10 + window.scrollX;
 
                 if (childLeftPos < 10) childLeftPos = 10;
-                //           if ((previousTopPos + 35) > childTopPos) childTopPos = previousTopPos + 35
 
                 let strippedId =
                   'dsSCId' +
@@ -189,14 +217,30 @@ const dsSitecore = () => {
                 el.href = `${sitecoreUrl}${foundId}`;
                 el.target = 'dsSitecore';
                 el.classList.add('dsSC__item');
+                el.draggable = true;
                 el.setAttribute('dsSCId', strippedId);
                 child.classList.add(strippedId);
+
+                if (prevPositions.includes(`${childTopPos},${childLeftPos}`)) {
+                  childTopPos += 18;
+                  childLeftPos += 18;
+                }
+                prevPositions.push(`${childTopPos},${childLeftPos}`);
+
                 el.style.top = childTopPos + 'px';
                 el.style.left = childLeftPos + 'px';
                 el.innerHTML = `<img src='https://raw.githubusercontent.com/mikelothar/assets/master/ds-sitecore/icon.svg' alt> ${foundName
                   .replace(/View$/, '')
                   .split(/(?=[A-Z])/)
                   .join(' ')}`;
+
+                let close = document.createElement('span');
+                close.classList.add('dsSC__item-close');
+                el.appendChild(close);
+                close.addEventListener('click', (ev) => {
+                  ev.preventDefault();
+                  ev.target.parentElement.style.display = 'none';
+                });
 
                 el.onmouseover = (ev) => {
                   const target = document.querySelector(
@@ -210,6 +254,7 @@ const dsSitecore = () => {
                   );
                   target && target.classList.remove('dsSC__target');
                 };
+
 
                 dsSC.appendChild(el);
 
