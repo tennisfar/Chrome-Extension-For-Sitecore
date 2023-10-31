@@ -172,7 +172,7 @@ const dsSitecore = () => {
             .replace(/\/.*$/, '')
             .toLowerCase();
           let dliOrDlo = dlo.indexOf(region) > -1 ? 'editdlo' : 'editdli';
-          dliOrDlo = host === 'web.develop' ? '' : dliOrDlo;
+          dliOrDlo = (host === 'web.develop' || host === 'web.trunk') ? '' : dliOrDlo;
           sitecoreUrl = `https://${host}${dliOrDlo}.danskespil.dk/sitecore/shell/Applications/Content%20Editor.aspx?sc_bw=1&fo=`;
         };
 
